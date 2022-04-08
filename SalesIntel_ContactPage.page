@@ -1,0 +1,39 @@
+<apex:page standardController="Contact" sidebar="false" name="SalesIntel" showHeader="false">
+    <style>
+        .noSidebarCell {
+            padding: 0px;
+        }
+        
+        .bodyDiv .outerNoSidebar {
+            padding-bottom: 0px !important;
+        }
+        
+        
+
+        body, html {
+          height: 100%;
+        }
+        
+        #lightning {
+            height: 100%;
+        }
+    </style>
+    <apex:slds />
+    <apex:includeLightning />
+    
+    <div id="lightning"></div>
+    
+    <script>
+        $Lightning.use("salesintelio:SalesIntel", function() {
+            //$Lightning.createComponent("salesintelio:SalesIntel_ContactView", {objectId: '{!Contact.Id}',Objectemail:'{!Contact.Email}'}, 'lightning', function (cmp) {
+
+            $Lightning.createComponent("salesintelio:SalesIntel_ContactView", {objectId: '{!Contact.Id}'}, 'lightning', function (cmp) {
+                $A.eventService.addHandler({ "event": "salesintelio:SalesIntel_refreshViaVF", "handler" : refresh });
+            });
+        });
+        
+        function refresh() {
+            window.top.location.href="/{!Contact.Id}";
+        }
+    </script>
+</apex:page>
